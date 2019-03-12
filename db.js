@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('dogprojectapi', 'postgres', 'AllElite', {
+const sequelize = new Sequelize('dogprojectapi', 'postgres', 'Welcome1', {
     host: 'localhost',
     dialect: 'postgres'
 
