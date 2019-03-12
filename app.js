@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 
 sequelize.sync();
 app.use(bodyParser.json());
+app.use(require('./middleware/headers'));
 
 //EXPOSED ROUTES//
 app.use('/dogs', user);
