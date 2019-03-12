@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var dogs = require('./controllers/dogsController');
 var doglist = require('./controllers/doglistController');
+var profile = require('./controllers/profileController');
 
 var user = require('./controllers/userController');
 var sequelize = require('./db');
@@ -20,6 +21,7 @@ app.use('/dogs', doglist);
 //PROTECTED ROUTES//
 app.use(require('./middleware/validate-session'));
 app.use('/dogs', dogs);
+app.use('/dogs', profile);
 
 
 app.listen(3000, function(){

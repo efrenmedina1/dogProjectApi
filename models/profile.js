@@ -5,7 +5,8 @@ module.exports = function (sequelize, DataTypes) {
         about: DataTypes.STRING,
         picture: DataTypes.STRING,
         email: DataTypes.STRING,
-        phone: DataTypes.INTEGER,
+        phone: DataTypes.STRING,
         address: DataTypes.STRING,
+        userId: DataTypes.STRING,
     });
 };
