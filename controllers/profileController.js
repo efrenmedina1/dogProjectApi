@@ -42,25 +42,42 @@ router.post('/profile', (req, res) => {
     );
 });
 
-//IS NOT OPERATIONAL
-// router.delete('/profile/:id', (req, res) => {
-//     var data = req.params.id;
-//     var userid = req.user.id;
+router.get('/profile/:id', (req, res)=> {
+    // var data = req.params.id;
+    // var userid = req.userId.id;
 
-//     ProfileModel
-//     .destroy({
-//         where: {id: data, userId: userid}
-//     }).then(
-//         function deleteProfileSuccess(data){
-//             res.send("you deleted a profile");
-//         },
-//         function deleteProfileError(err){
-//             res.send(500, err.message);
-//         }
-//     );
-// });
+    ProfileModel
+    .findOne({
+        where: { id: req.params.id, userId: req.user.userid }
+    }).then(
+        function findOneSuccess(data) {
+            res.json(data);
+        },
+        function findOneError(err) {
+            res.send(500, err.message);
+        }
+    );
+});
 
-router.put('//:id', (req, res) => {
+// IS NOT OPERATIONAL
+router.delete('/profile/:id', (req, res) => {
+    var data = req.params.id;
+    var userid = req.body.userId;
+
+    ProfileModel
+    .destroy({
+        where: {id: data, userId: userid}
+    }).then(
+        function deleteProfileSuccess(data){
+            res.send("you deleted a profile");
+        },
+        function deleteProfileError(err){
+            res.send(500, err.message);
+        }
+    );
+});
+
+router.put('/profile/:id', (req, res) => {
     if (!req.errors) {
         ProfileModel.update(req.body, { where: { id: req.params.id }})
         .then(profiledata => res.status(200).json(profiledata))
