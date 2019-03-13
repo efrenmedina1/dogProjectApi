@@ -42,32 +42,28 @@ router.post('/profile', (req, res) => {
     );
 });
 
-router.get('/profile/:id', (req, res)=> {
-    // var data = req.params.id;
-    // var userid = req.userId.id;
+// router.get('/profile/:id', (req, res)=> {
+//     var data = req.params.id;
+//     var userid = req.user.id;
 
-    ProfileModel
-    .findOne({
-        where: { id: req.params.id, userId: req.user.userid }
-    }).then(
-        function findOneSuccess(data) {
-            res.json(data);
-        },
-        function findOneError(err) {
-            res.send(500, err.message);
-        }
-    );
-});
+//     ProfileModel
+//     .findOne({
+//         where: { id: data, userid: userid }
+//     }).then(
+//         function findOneSuccess(data) {
+//             res.json(data);
+//         },
+//         function findOneError(err) {
+//             res.send(500, err.message);
+//         }
+//     );
+// });
 
-// IS NOT OPERATIONAL
+
 router.delete('/profile/:id', (req, res) => {
-    var data = req.params.id;
-    var userid = req.body.userId;
-
     ProfileModel
-    .destroy({
-        where: {id: data, userId: userid}
-    }).then(
+    .destroy({ where: { id: req.params.id} })
+    .then(
         function deleteProfileSuccess(data){
             res.send("you deleted a profile");
         },
@@ -75,7 +71,7 @@ router.delete('/profile/:id', (req, res) => {
             res.send(500, err.message);
         }
     );
-});
+})
 
 router.put('/profile/:id', (req, res) => {
     if (!req.errors) {

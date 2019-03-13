@@ -3,7 +3,6 @@ var sequelize = require('../db');
 var CommentsModel = sequelize.import('../models/comments');
 
 router.get('/comments', (req, res) => {
-
     CommentsModel
     .findAll()
     .then(
@@ -16,6 +15,21 @@ router.get('/comments', (req, res) => {
     );
 });
 
+router.get('/comments/:id', (req, res)=> {
+    var data = req.params.id;
+    
+    CommentsModel
+    .findOne({
+        where: { id: data }
+    }).then(
+        function findOneSuccess(data) {
+            res.json(data);
+        },
+        function findOneError(err) {
+            res.send(500, err.message);
+        }
+    );
+});
 // router.get('/comments', (req, res) => {
 //     var userid = req.user.id;
 
@@ -33,7 +47,7 @@ router.get('/comments', (req, res) => {
 //     );
 // });
 
-//POST A DOG FOR A USER//
+
 router.post('/comments', (req, res) => {
     var userId = req.user.id;
     var commentData = {
@@ -53,5 +67,30 @@ router.post('/comments', (req, res) => {
         }
     );
 });
+
+
+router.delete('/comments/:id', (req, res) => {
+    CommentsModel
+    .destroy({ where: { id: req.params.id} })
+    .then(
+        function deleteCommentSuccess(data){
+            res.send("you deleted a comment");
+        },
+        function deleteCommentError(err){
+            res.send(500, err.message);
+        }
+    );
+})
+
+router.put('/comments/:id', (req, res) => {
+    if (!req.errors) {
+        CommentsModel.update(req.body, { where: { id: req.params.id }})
+        .then(commentdata => res.status(200).json(commentdata))
+        .catch(err => res.json(req.errors))
+    } else {
+      res.status(500).json(req.errors)
+    }
+  })
+
 
 module.exports = router;
