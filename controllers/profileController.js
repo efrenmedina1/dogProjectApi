@@ -2,6 +2,23 @@ var router = require('express').Router();
 var sequelize = require('../db');
 var ProfileModel = sequelize.import('../models/profile');
 
+router.get('/:id', (req, res)=> {
+    var data = req.params.id;
+    
+    ProfileModel
+    .findOne({
+        where: { id: data }
+    }).then(
+        function findOneSuccess(data) {
+            res.json(data);
+        },
+        function findOneError(err) {
+            res.send(500, err.message);
+        }
+    );
+});
+
+
 router.get('/', (req, res) => {
 
     ProfileModel
