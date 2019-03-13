@@ -4,7 +4,7 @@ var sequelize = require('../db');
 var DogsModel = sequelize.import('../models/dogs');
 
 //GET ALL DOGS FOR A USER//
-router.get('/fetch', (req, res) => {
+router.get('/', (req, res) => {
     var userid = req.user.id;
 
     DogsModel
@@ -22,7 +22,7 @@ router.get('/fetch', (req, res) => {
 });
 
 //POST A DOG FOR A USER//
-router.post('/fetch', (req, res) => {
+router.post('/', (req, res) => {
     var userId = req.user.id;
     var dogData = {
         breed: req.body.breed,
@@ -47,7 +47,7 @@ router.post('/fetch', (req, res) => {
 });
 
 //GET A SINGLE DOG FOR AN USER//
-router.get('/fetch/:id', (req, res)=> {
+router.get('/:id', (req, res)=> {
     var data = req.params.id;
     var userid = req.user.id;
 
@@ -65,7 +65,7 @@ router.get('/fetch/:id', (req, res)=> {
 });
 
 //DELETE A DOG FOR AN USER//
-router.delete('/fetch/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     var data = req.params.id;
     var userid = req.user.id;
 
@@ -84,7 +84,7 @@ router.delete('/fetch/:id', (req, res) => {
 
 //UPDATE A DOG FOR AN USER//
 //THIS ONE OPERATES
-router.put('/fetch/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     if (!req.errors) {
         DogsModel.update(req.body, { where: { id: req.params.id }})
         .then(dogdata => res.status(200).json(dogdata))
