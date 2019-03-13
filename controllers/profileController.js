@@ -2,7 +2,7 @@ var router = require('express').Router();
 var sequelize = require('../db');
 var ProfileModel = sequelize.import('../models/profile');
 
-router.get('/profile', (req, res) => {
+router.get('/', (req, res) => {
 
     ProfileModel
     .findAll()
@@ -16,7 +16,7 @@ router.get('/profile', (req, res) => {
     );
 });
 
-router.post('/profile', (req, res) => {
+router.post('/', (req, res) => {
     var userId = req.user.id;
     var profileData = {
         name: req.body.name,
@@ -60,7 +60,7 @@ router.post('/profile', (req, res) => {
 // });
 
 
-router.delete('/profile/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     ProfileModel
     .destroy({ where: { id: req.params.id} })
     .then(
@@ -73,7 +73,7 @@ router.delete('/profile/:id', (req, res) => {
     );
 })
 
-router.put('/profile/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     if (!req.errors) {
         ProfileModel.update(req.body, { where: { id: req.params.id }})
         .then(profiledata => res.status(200).json(profiledata))

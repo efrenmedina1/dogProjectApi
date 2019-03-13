@@ -7,6 +7,7 @@ var doglist = require('./controllers/doglistController');
 var profilelist = require('./controllers/profilelistController');
 var profile = require('./controllers/profileController');
 var comments = require('./controllers/commentsController');
+var commentslist = require('./controllers/commentslistController');
 
 var user = require('./controllers/userController');
 var sequelize = require('./db');
@@ -17,15 +18,16 @@ app.use(bodyParser.json());
 app.use(require('./middleware/headers'));
 
 //EXPOSED ROUTES//
-app.use('/dogs', user);
-app.use('/dogs', doglist);
-app.use('/dogs', profilelist)
+app.use('/user', user);
+app.use('/doglist', doglist);
+app.use('/profilelist', profilelist);
+app.use('/commentslist', commentslist);
 
 //PROTECTED ROUTES//
 app.use(require('./middleware/validate-session'));
 app.use('/dogs', dogs);
-app.use('/dogs', profile);
-app.use('/dogs', comments);
+app.use('/profile', profile);
+app.use('/comments', comments);
 
 
 app.listen(3000, function(){
