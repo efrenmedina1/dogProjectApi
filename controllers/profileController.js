@@ -2,6 +2,23 @@ var router = require('express').Router();
 var sequelize = require('../db');
 var ProfileModel = sequelize.import('../models/profile');
 
+router.get('/', (req, res) => {
+    var userid = req.user.id;
+
+    ProfileModel
+    .findAll({
+        where: { userId: userid }
+    })
+    .then(
+        function findAllSuccess(data) {
+            res.json(data);
+        },
+        function findAllError(err) {
+            res.send(500, err.message);
+        }
+    );
+});
+
 router.get('/:id', (req, res)=> {
     var data = req.params.id;
     
@@ -13,21 +30,6 @@ router.get('/:id', (req, res)=> {
             res.json(data);
         },
         function findOneError(err) {
-            res.send(500, err.message);
-        }
-    );
-});
-
-
-router.get('/', (req, res) => {
-
-    ProfileModel
-    .findAll()
-    .then(
-        function findAllSuccess(data) {
-            res.json(data);
-        },
-        function findAllError(err) {
             res.send(500, err.message);
         }
     );
@@ -58,24 +60,6 @@ router.post('/', (req, res) => {
         }
     );
 });
-
-// router.get('/profile/:id', (req, res)=> {
-//     var data = req.params.id;
-//     var userid = req.user.id;
-
-//     ProfileModel
-//     .findOne({
-//         where: { id: data, userid: userid }
-//     }).then(
-//         function findOneSuccess(data) {
-//             res.json(data);
-//         },
-//         function findOneError(err) {
-//             res.send(500, err.message);
-//         }
-//     );
-// });
-
 
 router.delete('/:id', (req, res) => {
     ProfileModel

@@ -3,11 +3,15 @@ var sequelize = require('../db');
 var CommentsModel = sequelize.import('../models/comments');
 
 router.get('/', (req, res) => {
+    var userid = req.user.id;
+
     CommentsModel
-    .findAll()
+    .findAll({
+        where: {userId: userid}
+    })
     .then(
-        function findAllSuccess(comments) {
-            res.json(comments);
+        function findAllSuccess(data) {
+            res.json(data);
         },
         function findAllError(err) {
             res.send(500, err.message);
@@ -30,23 +34,6 @@ router.get('/:id', (req, res)=> {
         }
     );
 });
-// router.get('/comments', (req, res) => {
-//     var userid = req.user.id;
-
-//     CommentsModel
-//     .findAll({
-//         where: { userId: userid }
-//     })
-//     .then(
-//         function findAllSuccess(comments) {
-//             res.json(comments);
-//         },
-//         function findAllError(err) {
-//             res.send(500, err.message);
-//         }
-//     );
-// });
-
 
 router.post('/', (req, res) => {
     var userId = req.user.id;
@@ -67,7 +54,6 @@ router.post('/', (req, res) => {
         }
     );
 });
-
 
 router.delete('/:id', (req, res) => {
     CommentsModel

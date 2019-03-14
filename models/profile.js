@@ -7,6 +7,6 @@ module.exports = function (sequelize, DataTypes) {
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
         address: DataTypes.STRING,
-        userId: DataTypes.STRING,
+        userId: DataTypes.INTEGER,
     });
 };
