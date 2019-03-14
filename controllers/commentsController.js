@@ -51,7 +51,7 @@ router.get('/:id', (req, res)=> {
 router.post('/', (req, res) => {
     var userId = req.user.id;
     var commentData = {
-        description: req.body.description,
+        description: req.body.description, 
         userId: userId
     }
     CommentsModel
