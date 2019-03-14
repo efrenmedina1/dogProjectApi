@@ -1,9 +1,7 @@
 var router = require('express').Router();
 var sequelize = require('../db');
-// var User = sequelize.import('..models/user');
 var DogsModel = sequelize.import('../models/dogs');
 
-//GET ALL DOGS FOR A USER//
 router.get('/', (req, res) => {
     var userid = req.user.id;
 
@@ -21,7 +19,6 @@ router.get('/', (req, res) => {
     );
 });
 
-//POST A DOG FOR A USER//
 router.post('/', (req, res) => {
     var userId = req.user.id;
     var dogData = {
@@ -46,7 +43,6 @@ router.post('/', (req, res) => {
     );
 });
 
-//GET A SINGLE DOG FOR AN USER//
 router.get('/:id', (req, res)=> {
     var data = req.params.id;
     var userid = req.user.id;
@@ -64,7 +60,6 @@ router.get('/:id', (req, res)=> {
     );
 });
 
-//DELETE A DOG FOR AN USER//
 router.delete('/:id', (req, res) => {
     var data = req.params.id;
     var userid = req.user.id;
@@ -82,8 +77,6 @@ router.delete('/:id', (req, res) => {
     );
 });
 
-//UPDATE A DOG FOR AN USER//
-//THIS ONE OPERATES
 router.put('/:id', (req, res) => {
     if (!req.errors) {
         DogsModel.update(req.body, { where: { id: req.params.id }})
