@@ -1,10 +1,8 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('dogprojectapi', 'postgres', 'Welcome1', {
-    host: 'localhost',
-    dialect: 'postgres'
-
-});
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+})
 
 sequelize.authenticate()
 .then(
