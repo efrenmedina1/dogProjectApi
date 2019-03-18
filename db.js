@@ -14,7 +14,7 @@ sequelize.authenticate()
     }
 );
 
-module.exports =sequelize;
+module.exports = sequelize;
 
 // // // Associations
 // const db = {};

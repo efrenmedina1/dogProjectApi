@@ -37,7 +37,7 @@ app.use('/comments', comments);
 app.use('/reply', reply);
 app.use('/dogcomment', dogcomment);
 
-
-app.listen(process.env.PORT, () => {
-    console.log(`server is listening on port ${process.env.PORT}`)
-})
+ 
+// app.listen(process.env.PORT, () => {
+//     console.log(`server is listening on port ${process.env.PORT}`)
+// })
