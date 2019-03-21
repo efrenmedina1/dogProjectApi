@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 var user = require('./controllers/userController');
 var dogs = require('./controllers/dogsController');
 var doglist = require('./controllers/doglistController');
-var profilelist = require('./controllers/profilelistController');
+var profilelist = require('./controllers/profilelistController'); 
 var profile = require('./controllers/profileController');
 var comments = require('./controllers/commentsController');
 var commentslist = require('./controllers/commentslistController');
