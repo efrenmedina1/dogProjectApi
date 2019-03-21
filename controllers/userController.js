@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var sequelize = require('../db');
-var User = sequelize.import('../models/user');
+var db = require('../db').db;
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
@@ -10,7 +9,7 @@ router.post('/', function (req, res) {
     var pass = req.body.user.password; 
     var role = req.body.user.role;
 
-    User.create({
+    db.User.create({
         username: username,
         passwordhash: bcrypt.hashSync(pass, 10),
         role: role,
@@ -31,7 +30,7 @@ router.post('/', function (req, res) {
 });
 
 router.post('/login', (req, res) => {
-    User.findOne({ where: {username: req.body.user.username}})
+    db.User.findOne({ where: {username: req.body.user.username}})
     .then(
         user =>  {
             if (user) {

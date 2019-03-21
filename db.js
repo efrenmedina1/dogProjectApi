@@ -16,31 +16,45 @@ sequelize.authenticate()
     }
 );
 
-module.exports =sequelize;
 
-// // // Associations
-// const db = {};
+// Associations
+const db = {};
 
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-// db.User = require('./models/user')(sequelize, Sequelize);
-// db.Dogs = require('./models/dogs')(sequelize, Sequelize);
-// db.Profile = require('./models/profile')(sequelize, Sequelize);
-// db.Comments = require('./models/comments')(sequelize, Sequelize);
+db.User = require('./models/user')(sequelize, Sequelize);
+db.Dogs = require('./models/dogs')(sequelize, Sequelize);
+db.Likes = require('./models/likes')(sequelize, Sequelize);
+db.Profile = require('./models/profile')(sequelize, Sequelize);
+db.Comment = require('./models/comments')(sequelize, Sequelize);
+db.Reply = require('./models/reply')(sequelize, Sequelize);
+db.Dogcomment = require('./models/dogComment')(sequelize, Sequelize);
 
-// db.Dogs.belongsTo(db.User);
-// db.User.hasMany(db.Dogs);
-// db.Comments.belongsTo(db.User);
-// db.User.hasMany(db.Comments);
-// db.Comments.belongsTo(db.Dogs);
-// db.Dogs.hasMany(db.Comments);
-// db.Comments.belongsTo(db.Profile);
-// db.Profile.hasMany(db.Comments);
-// db.Profile.belongsTo(db.User);
-// db.User.hasMany(db.Profile);
+db.Likes.belongsTo(db.Dogs, {onDelete: 'cascade' });
+db.Dogs.hasMany(db.Likes, {onDelete: 'cascade' });
+db.Likes.belongsTo(db.User, {onDelete: 'cascade' });
+db.User.hasMany(db.Likes, {onDelete: 'cascade' });
+db.User.hasMany(db.Dogs, { onDelete: 'cascade' });
 
-// module.exports = {
-//     db: db,
-//     sequelize: sequelize
-// };
+// db.Dogs.belongsTo(db.User, { onDelete: 'cascade' });
+// db.User.hasMany(db.Dogs, { onDelete: 'cascade' });
+// db.Comment.belongsTo(db.User, { onDelete: 'cascade' });
+// db.User.hasMany(db.Comment, { onDelete: 'cascade' });
+// db.Comment.belongsTo(db.Dogs, { onDelete: 'cascade' });
+// db.Dogs.hasMany(db.Comment, { onDelete: 'cascade' });
+// db.Comment.belongsTo(db.Profile, { onDelete: 'cascade' });
+// db.Profile.hasMany(db.Comment, { onDelete: 'cascade' });
+// db.Profile.belongsTo(db.User, { onDelete: 'cascade' });
+// db.User.hasMany(db.Profile, { onDelete: 'cascade' });
+// db.Reply.belongsTo(db.Comment, { onDelete: 'cascade' });
+// db.Comment.hasMany(db.Reply, { onDelete: 'cascade' });
+// db.Dogs.belongsTo(db.Profile, { onDelete: 'cascade' });
+// db.Profile.hasMany(db.Dogs, { onDelete: 'cascade' });
+// db.Dogcomment.belongsTo(db.Dogs, { onDelete: 'cascade' });
+// db.Dogs.hasMany(db.Dogcomment, { onDelete: 'cascade' });
+
+module.exports = {
+    db: db,
+    sequelize: sequelize
+};

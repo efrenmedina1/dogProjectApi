@@ -1,11 +1,13 @@
 var router = require('express').Router();
 var sequelize = require('../db');
-var CommentsModel = sequelize.import('../models/comments');
+// var CommentsModel = sequelize.import('../models/comments');
+var db = require('../db').db;
+
 
 router.get('/', (req, res) => {
     var userid = req.user.id;
 
-    CommentsModel
+    db.Comment
     .findAll({
         where: {userId: userid}
     })
@@ -22,7 +24,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res)=> {
     var data = req.params.id;
     
-    CommentsModel
+    db.Comment
     .findOne({
         where: { id: data }
     }).then(
@@ -41,7 +43,7 @@ router.post('/', (req, res) => {
         description: req.body.description, 
         userId: userId
     }
-    CommentsModel
+    db.Comment
     .create(commentData)
     .then(
         function createSuccess(commentData) {
@@ -56,7 +58,7 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    CommentsModel
+    db.Comment
     .destroy({ where: { id: req.params.id} })
     .then(
         function deleteCommentSuccess(data){
@@ -70,7 +72,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     if (!req.errors) {
-        CommentsModel.update(req.body, { where: { id: req.params.id }})
+        db.Comment.update(req.body, { where: { id: req.params.id }})
         .then(commentdata => res.status(200).json(commentdata))
         .catch(err => res.json(req.errors))
     } else {

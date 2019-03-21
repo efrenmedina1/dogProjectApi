@@ -1,11 +1,13 @@
 var router = require('express').Router();
 var sequelize = require('../db');
-var ProfileModel = sequelize.import('../models/profile');
+// var ProfileModel = sequelize.import('../models/profile');
+var db = require('../db').db;
+
 
 router.get('/', (req, res) => {
     var userid = req.user.id;
 
-    ProfileModel
+    db.Profile
     .findAll({
         where: { userId: userid }
     })
@@ -22,7 +24,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res)=> {
     var data = req.params.id;
     
-    ProfileModel
+    db.Profile
     .findOne({
         where: { id: data }
     }).then(
@@ -47,7 +49,7 @@ router.post('/', (req, res) => {
         address: req.body.address,
         userId: userId
     }
-    ProfileModel
+    db.Profile
     .create(profileData)
     .then(
         function createSuccess(profileData) {
@@ -62,7 +64,7 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    ProfileModel
+    db.Profile
     .destroy({ where: { id: req.params.id} })
     .then(
         function deleteProfileSuccess(data){
@@ -76,7 +78,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     if (!req.errors) {
-        ProfileModel.update(req.body, { where: { id: req.params.id }})
+        db.Profile.update(req.body, { where: { id: req.params.id }})
         .then(profiledata => res.status(200).json(profiledata))
         .catch(err => res.json(req.errors))
     } else {

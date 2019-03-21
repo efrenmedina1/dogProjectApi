@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var sequelize = require('../db');
-var ReplyModel = sequelize.import('../models/reply');
+// var ReplyModel = sequelize.import('../models/reply');
+var db = require('../db').db;
+
 
 router.post('/', (req, res) => {
     var userId = req.user.id;
@@ -11,7 +13,7 @@ router.post('/', (req, res) => {
         userId: userId,
         
     }
-    ReplyModel
+    db.Reply
     .create(replyData)
     .then(
         function createSuccess(replyData) {
@@ -29,7 +31,7 @@ router.get('/:id', (req, res)=> {
     var data = req.params.id;
     var userid = req.user.id;
 
-    ReplyModel
+    db.Reply
     .findOne({
         where: { id: data, userId: userid }
     }).then(
@@ -46,7 +48,7 @@ router.delete('/:id', (req, res) => {
     var data = req.params.id;
     var userid = req.user.id;
 
-    ReplyModel
+    db.Reply
     .destroy({
         where: {id: data, userId: userid}
     }).then(
@@ -61,7 +63,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     if (!req.errors) {
-        ReplyModel.update(req.body, { where: { id: req.params.id }})
+        db.Reply.update(req.body, { where: { id: req.params.id }})
         .then(replydata => res.status(200).json(replydata))
         .catch(err => res.json(req.errors))
     } else {

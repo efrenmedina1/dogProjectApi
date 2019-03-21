@@ -1,13 +1,19 @@
 var router = require('express').Router();
-var sequelize = require('../db');
-var DogsModel = sequelize.import('../models/dogs');
+var db = require('../db').db;
+
 
 router.get('/', (req, res) => {
     var userid = req.user.id;
 
-    DogsModel
+    db.Dogs
     .findAll({
-        where: { userId: userid }
+        where: { userId: userid },
+        include: [
+            { model: db.Likes, 
+            include: [
+                { model: db.User }
+            ]
+            }]
     })
     .then(
         function findAllSuccess(data) {
@@ -29,7 +35,7 @@ router.post('/', (req, res) => {
         description: req.body.description,
         userId: userId
     }
-    DogsModel
+    db.Dogs
     .create(dogData)
     .then(
         function createSuccess(dogData) {
@@ -47,7 +53,7 @@ router.get('/:id', (req, res)=> {
     var data = req.params.id;
     var userid = req.user.id;
 
-    DogsModel
+    db.Dogs
     .findOne({
         where: { id: data, userId: userid }
     }).then(
@@ -64,7 +70,7 @@ router.delete('/:id', (req, res) => {
     var data = req.params.id;
     var userid = req.user.id;
 
-    DogsModel
+    db.Dogs
     .destroy({
         where: {id: data, userId: userid}
     }).then(
@@ -79,7 +85,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     if (!req.errors) {
-        DogsModel.update(req.body, { where: { id: req.params.id }})
+        db.Dogs.update(req.body, { where: { id: req.params.id }})
         .then(dogdata => res.status(200).json(dogdata))
         .catch(err => res.json(req.errors))
     } else {

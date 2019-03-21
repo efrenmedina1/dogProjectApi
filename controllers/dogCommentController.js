@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var sequelize = require('../db');
-var DogCoModel = sequelize.import('../models/dogComment');
+// var DogCoModel = sequelize.import('../models/dogComment');
+var db = require('../db').db;
+
 
 router.post('/', (req, res) => {
     var userId = req.user.id;
@@ -11,7 +13,7 @@ router.post('/', (req, res) => {
         userId: userId,
         
     }
-    DogCoModel
+    db.Dogcomment
     .create(replyData)
     .then(
         function createSuccess(Data) {
@@ -29,7 +31,7 @@ router.get('/:id', (req, res)=> {
     var data = req.params.id;
     var userid = req.user.id;
 
-    DogCoModel
+    db.Dogcomment
     .findOne({
         where: { id: data, userId: userid }
     }).then(
@@ -46,7 +48,7 @@ router.delete('/:id', (req, res) => {
     var data = req.params.id;
     var userid = req.user.id;
 
-    DogCoModel
+    db.Dogcomment
     .destroy({
         where: {id: data, userId: userid}
     }).then(
@@ -61,7 +63,7 @@ router.delete('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
     if (!req.errors) {
-        DogCoModel.update(req.body, { where: { id: req.params.id }})
+        db.Dogcomment.update(req.body, { where: { id: req.params.id }})
         .then(data => res.status(200).json(data))
         .catch(err => res.json(req.errors))
     } else {
