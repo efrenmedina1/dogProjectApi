@@ -3,5 +3,6 @@ module.exports = function (sequelize, DataTypes) {
         comment: DataTypes.STRING,
         userId: DataTypes.INTEGER,
         commentId: DataTypes.INTEGER,
+        username: DataTypes.STRING,
     });
 };

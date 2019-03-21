@@ -41,7 +41,8 @@ router.post('/', (req, res) => {
     var userId = req.user.id;
     var commentData = {
         description: req.body.description, 
-        userId: userId
+        userId: userId,
+        username: req.body.username
     }
     db.Comment
     .create(commentData)

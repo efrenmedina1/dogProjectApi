@@ -11,6 +11,7 @@ router.post('/', (req, res) => {
         comment: req.body.comment,
         commentId: commentId,
         userId: userId,
+        username: req.body.username,
         
     }
     db.Reply
