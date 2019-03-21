@@ -10,4 +10,21 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json(err))
 });
 
+router.get('/:id', (req, res) => {
+    var userid = req.params.id;
+
+    db.Profile
+    .findAll({
+        where: { userId: userid }
+    })
+    .then(
+        function findAllSuccess(data) {
+            res.json(data);
+        },
+        function findAllError(err) {
+            res.send(500, err.message);
+        }
+    );
+});
+
 module.exports = router;
